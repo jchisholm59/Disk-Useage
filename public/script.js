@@ -66,6 +66,11 @@ async function scanPath(targetPath, isBack = false) {
 
         currentItems = data.items;
         currentTypeStats = data.typeStats;
+
+        // Calculate total size
+        const totalBytes = currentItems.reduce((acc, item) => acc + item.size, 0);
+        document.getElementById('totalSizeValue').innerText = formatSize(totalBytes);
+
         renderTable(currentItems);
         renderCharts(currentItems, currentTypeStats);
     } catch (err) { alert("Failed to scan directory."); } finally {
@@ -173,9 +178,16 @@ function renderCharts(items, typeStats) {
 
 async function deleteItem(event, path) {
     event.stopPropagation();
-    if (!confirm(`Delete ${path}?`)) return;
+    if (!confirm(`WARNING: You are about to PERMANENTLY delete:\n${path}\n\nThis action cannot be undone. Are you sure?`)) return;
+    if (!confirm(`FINAL CONFIRMATION:\nAre you REALLY sure you want to delete this? There is no recovery.`)) return;
+
     const res = await fetch('/api/delete', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ targetPath: path }) });
-    if (res.ok) scanPath(currentPath, true);
+    if (res.ok) {
+        alert("Deleted successfully.");
+        scanPath(currentPath, true);
+    } else {
+        alert("Failed to delete. Access denied or file in use.");
+    }
 }
 
 async function findDuplicates() {

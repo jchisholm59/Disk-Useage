@@ -11,8 +11,29 @@ const PORT = process.env.PORT || 8888;
 app.use(express.json());
 app.use(express.static('public'));
 
+// Load ignore patterns
+let ignoreList = [];
+const ignoreFilePath = path.join(__dirname, '.analyzerignore');
+if (fs.existsSync(ignoreFilePath)) {
+    ignoreList = fs.readFileSync(ignoreFilePath, 'utf8')
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line && !line.startsWith('#'));
+}
+
+function shouldIgnore(fullPath) {
+    return ignoreList.some(pattern => {
+        // Handle absolute paths vs simple folder names
+        if (pattern.startsWith('/')) {
+            return fullPath === pattern || fullPath.startsWith(pattern + '/');
+        }
+        return fullPath.split(path.sep).includes(pattern);
+    });
+}
+
 // Helper to get directory size and type stats
 async function getDirMetrics(dirPath) {
+    if (shouldIgnore(dirPath)) return { size: 0, typeStats: {} };
     let size = 0;
     const typeStats = {};
     try {
@@ -50,6 +71,7 @@ app.get('/api/scan', async (req, res) => {
         const totalTypeStats = {};
         const result = await Promise.all(items.map(async (item) => {
             const fullPath = path.join(targetPath, item);
+            if (shouldIgnore(fullPath)) return null;
             try {
                 const stats = await fs.lstat(fullPath);
                 const isDirectory = stats.isDirectory();
@@ -85,6 +107,7 @@ app.get('/api/large-files', async (req, res) => {
     const allFiles = [];
 
     async function walk(dir) {
+        if (shouldIgnore(dir)) return;
         try {
             const files = await fs.readdir(dir);
             for (const file of files) {

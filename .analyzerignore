@@ -1,0 +1,13 @@
+# Linux Virtual Filesystems
+/proc
+/sys
+/dev
+/run
+
+# macOS Metadata & System
+.DS_Store
+.Spotlight-V100
+.Trashes
+
+# Node.js Bulky Folders (Optional, uncomment to skip)
+# node_modules
