@@ -1,0 +1,26 @@
+[Unit]
+Description=Disk Usage Analyzer Web App
+After=network.target
+
+[Service]
+# Set the user who will run the service (change 'jim' to your actual username)
+User=jim
+Group=staff
+
+# The directory where the app is located
+WorkingDirectory=/Users/jim/Disk-Useage
+
+# The command to start the app using PM2 (installed globally)
+ExecStart=/usr/local/bin/pm2 start ecosystem.config.js --no-daemon
+
+# The command to stop the app
+ExecStop=/usr/local/bin/pm2 stop disk-analyzer
+
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=disk-analyzer
+
+[Install]
+WantedBy=multi-user.target
