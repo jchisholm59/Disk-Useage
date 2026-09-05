@@ -1,0 +1,13 @@
+# Ignore ZIP archives
+*.zip
+
+# Dependencies
+node_modules/
+
+# Logs
+logs/*.log
+logs/
+
+# IDE specific files
+.idea/
+.DS_Store
