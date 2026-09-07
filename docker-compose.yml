@@ -1,0 +1,13 @@
+services:
+  disk-usage:
+    build: .
+    container_name: disk-usage
+    restart: always
+    ports:
+      - "8888:8888"
+    volumes:
+      # Mount the host root filesystem read-only to allow scanning
+      - /:/host_root:ro
+    environment:
+      - PORT=8888
+      - HOME=/host_root

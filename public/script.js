@@ -4,8 +4,8 @@ let currentTypeStats = {};
 let historyStack = [];
 let currentPath = '';
 
-Chart.defaults.color = '#e2e8f0';
-Chart.defaults.borderColor = '#475569';
+Chart.defaults.color = '#f1f5f9';
+Chart.defaults.borderColor = '#3d6464';
 
 function formatSize(bytes) {
     if (bytes === 0) return '0 B';

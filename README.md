@@ -63,6 +63,25 @@ pm2 status
 pm2 logs disk-analyzer
 ```
 
+### Option 3: Docker (Recommended for Portability)
+You can run the Disk Usage Analyzer as a Docker container.
+
+**Quick Start:**
+1.  **Build and start the container:**
+    ```bash
+    docker compose up -d --build
+    ```
+2.  **Access the UI:** Navigate to `http://localhost:8888`.
+
+**Scanning the Host Machine:**
+Because the app runs in a container, it doesn't have direct access to your host's files by default. In `docker-compose.yml`, the host's root filesystem is mounted to `/host_root` (read-only).
+- The app is configured to default to `/host_root` on startup, so you will see your real files immediately.
+- To scan other specific paths on your host, prefix them with `/host_root` (e.g., `/host_root/var/log`).
+
+**Troubleshooting:**
+- **View logs:** `docker logs -f disk-usage`
+- **Restart:** `docker compose restart`
+
 ## ⚙️ Advanced Deployment
 
 ### System-Wide Auto-Start

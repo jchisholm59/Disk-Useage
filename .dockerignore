@@ -1,0 +1,12 @@
+node_modules
+.git
+.idea
+*.log
+.env
+ios
+android
+logs
+Disk-Useage-Source.zip
+disk-analyzer.service
+ecosystem.config.js
+com.user.diskanalyzer.plist

@@ -1,0 +1,5 @@
+- [x] Update `index.html` theme to Dark Slate Grey
+- [x] Create `Dockerfile`
+- [x] Create `.dockerignore`
+- [x] Create `docker-compose.yml`
+- [x] Update `README.md`
