@@ -25,6 +25,13 @@
         #breadcrumbs span { color: #5eead4; }
         #breadcrumbs { color: #94a3b8 !important; }
         #folderSummary { color: #5eead4 !important; }
+        #largeFileModal { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#1e293b; padding:30px; border-radius:12px; border:2px solid #3d6464; z-index:1000; width:90%; max-height:80%; overflow-y:auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+        #largeFileTable { table-layout: fixed; }
+        #largeFileTable td { word-break: break-all; vertical-align: top; }
+        #largeFileTable th:nth-child(1) { width: 20%; }
+        #largeFileTable th:nth-child(2) { width: 65%; }
+        #largeFileTable th:nth-child(3) { width: 15%; text-align: right; }
+        #largeFileTable td:nth-child(3) { text-align: right; font-weight: bold; color: #5eead4; }
     </style>
 </head>
 <body>
@@ -39,7 +46,7 @@
             <button onclick="showLargeFiles()" style="background: #8b5cf6; margin-left: 10px;">Large Files</button>
         </div>
 
-        <div id="largeFileModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#1e293b; padding:30px; border-radius:12px; border:2px solid #475569; z-index:1000; width:80%; max-height:80%; overflow-y:auto; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+        <div id="largeFileModal">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
                 <h2 style="margin:0;">Top 50 Largest Files</h2>
                 <button onclick="closeModal()" style="background:#ef4444; padding:5px 15px;">Close</button>

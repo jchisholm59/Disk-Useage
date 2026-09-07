@@ -106,7 +106,11 @@ app.get('/api/scan', async (req, res) => {
 
 // API: Large File Report
 app.get('/api/large-files', async (req, res) => {
-    const targetPath = req.query.path;
+    let targetPath = req.query.path;
+    if (!targetPath) targetPath = process.env.HOME || '/';
+    if (targetPath.startsWith('~')) {
+        targetPath = path.join(process.env.HOME || process.env.USERPROFILE, targetPath.slice(1));
+    }
     const allFiles = [];
 
     async function walk(dir) {
@@ -167,7 +171,11 @@ app.post('/api/delete', async (req, res) => {
 });
 
 app.get('/api/duplicates', async (req, res) => {
-    const targetPath = req.query.path;
+    let targetPath = req.query.path;
+    if (!targetPath) targetPath = process.env.HOME || '/';
+    if (targetPath.startsWith('~')) {
+        targetPath = path.join(process.env.HOME || process.env.USERPROFILE, targetPath.slice(1));
+    }
     const sizeMap = new Map();
     const duplicates = [];
 
