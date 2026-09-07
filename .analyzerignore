@@ -1,8 +1,12 @@
-# Linux Virtual Filesystems
+# Linux Virtual Filesystems & Docker Layers
 /proc
 /sys
 /dev
 /run
+/var/lib/docker
+/var/lib/snapd
+docker
+overlay2
 
 # macOS Metadata & System
 .DS_Store

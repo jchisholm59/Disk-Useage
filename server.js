@@ -22,12 +22,15 @@ if (fs.existsSync(ignoreFilePath)) {
 }
 
 function shouldIgnore(fullPath) {
+    // Normalize path to check against patterns without the container prefix (/host_root)
+    const normalizedPath = fullPath.replace(/^\/host_root/, '') || '/';
+
     return ignoreList.some(pattern => {
         // Handle absolute paths vs simple folder names
         if (pattern.startsWith('/')) {
-            return fullPath === pattern || fullPath.startsWith(pattern + '/');
+            return normalizedPath === pattern || normalizedPath.startsWith(pattern + '/');
         }
-        return fullPath.split(path.sep).includes(pattern);
+        return normalizedPath.split(path.sep).includes(pattern);
     });
 }
 
